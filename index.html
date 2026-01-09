@@ -4,243 +4,231 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VU Student Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #6200ea; /* Deep Purple */
-            --primary-hover: #3700b3;
-            --bg-color: #f3f4f6;
-            --card-bg: #ffffff;
-            --text-color: #333;
-        }
+        :root { --primary-color: #6200ea; --bg-color: #f0f2f5; --card-bg: #ffffff; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); margin: 0; display: flex; justify-content: center; padding: 40px 20px; min-height: 100vh; }
+        
+        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 30px; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+        /* Card Styling */
+        .card { background: var(--card-bg); padding: 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); text-align: center; }
+        
+        h2 { color: var(--primary-color); font-weight: 700; margin-top: 0; font-size: 22px; }
+        label { display: block; text-align: left; font-weight: 600; font-size: 13px; color: #555; margin-bottom: 8px; margin-left: 5px; }
+        
+        select, input[type="file"] { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; background: #fafafa; outline: none; font-family: 'Poppins'; box-sizing: border-box; }
+        select:focus { border-color: var(--primary-color); background: #fff; }
+        
+        /* Buttons */
+        button { width: 100%; padding: 14px; background-color: var(--primary-color); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; transition: 0.3s; margin-top: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        button:hover { background-color: #3700b3; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(98, 0, 234, 0.2); }
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
 
-        .upload-card {
-            background: var(--card-bg);
-            width: 100%;
-            max-width: 420px;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
+        /* Result Table Styling */
+        #resultArea { margin-top: 20px; display: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        th { background: #f8f9fa; color: #444; padding: 10px; border-bottom: 2px solid #eee; text-align: left; font-weight: 600; }
+        td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; color: #333; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #f9f9f9; }
 
-        .upload-card:hover {
-            transform: translateY(-5px);
-        }
+        .badge { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 12px; }
 
-        h1 {
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 28px;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-
-        p.subtitle {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 8px;
-            margin-left: 5px;
-        }
-
-        select, input[type="file"] {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 15px;
-            background: #fafafa;
-            font-family: 'Poppins', sans-serif;
-            outline: none;
-            transition: all 0.3s;
-            box-sizing: border-box;
-        }
-
-        select:focus, input[type="file"]:hover {
-            border-color: var(--primary-color);
-            background: #fff;
-        }
-
-        /* File Input Styling Fix */
-        input[type="file"]::file-selector-button {
-            background: #eee;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-right: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            color: #555;
-        }
-
-        button {
-            width: 100%;
-            padding: 16px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(98, 0, 234, 0.3);
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: var(--primary-hover);
-            box-shadow: 0 6px 20px rgba(98, 0, 234, 0.4);
-        }
-
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        #status {
-            margin-top: 20px;
-            font-size: 14px;
-            font-weight: 500;
-        }
+        .status { margin-top: 15px; font-size: 13px; font-weight: 500; }
         .success { color: green; }
         .error { color: red; }
-
     </style>
 </head>
 <body>
 
-    <div class="upload-card">
-        <h1>Student Portal</h1>
-        <p class="subtitle">Upload your assignment files securely</p>
+<div class="container">
 
-        <div class="input-group">
-            <label>Select Task Number</label>
-            <select id="taskSelect">
-                <option value="" disabled selected>Select a Task</option>
+    <div class="card">
+        <h2>Upload Assignment</h2>
+        <div style="margin-bottom: 20px; text-align: left;">
+            <label>Select Task</label>
+            <select id="uploadTaskSelect">
                 </select>
         </div>
-
-        <div class="input-group">
+        <div style="margin-bottom: 20px; text-align: left;">
             <label>Attach File</label>
             <input type="file" id="fileInput">
         </div>
-
-        <button id="uploadBtn" onclick="uploadFile()">Upload</button>
-        <div id="status"></div>
+        <button id="uploadBtn" onclick="uploadFile()">Upload File</button>
+        <div id="uploadStatus" class="status"></div>
     </div>
 
-    <script>
-        // 1. Generate Dropdown Options (1 to 30)
-        const select = document.getElementById('taskSelect');
-        for (let i = 1; i <= 30; i++) {
-            let option = document.createElement('option');
-            option.value = `Task ${i}`;
-            option.text = `Task ${i}`;
-            select.appendChild(option);
-        }
+    <div class="card">
+        <h2>Result of Tasks</h2>
+        <div style="text-align: left;">
+            <label>Select Task to View Marks</label>
+            <select id="resultTaskSelect" onchange="fetchResult()">
+                <option value="" disabled selected>-- Select Task --</option>
+                </select>
+        </div>
 
-        // 2. Configuration (User apna Token yahan dale ga)
-        const REPO_OWNER = "devv-abubakar";
-        const REPO_NAME = "VU-Student-Portal";
+        <div id="loadingResult" style="display:none; margin-top:15px; color:#666; font-size:13px;">Checking records...</div>
         
-        // IMPORTANT: Yahan apna GitHub Token paste karein
-        const GITHUB_TOKEN = "YOUR_GITHUB_TOKEN_HERE"; 
+        <div id="resultArea">
+            <table id="resultTable">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th style="text-align: right;">Marks / 10</th>
+                    </tr>
+                </thead>
+                <tbody id="resultBody">
+                    </tbody>
+            </table>
+        </div>
+        <div id="resultStatus" class="status"></div>
+    </div>
 
-        async function uploadFile() {
-            const fileInput = document.getElementById('fileInput');
-            const taskSelect = document.getElementById('taskSelect');
-            const statusDiv = document.getElementById('status');
-            const btn = document.getElementById('uploadBtn');
+</div>
 
-            const file = fileInput.files[0];
-            const taskName = taskSelect.value;
+<script>
+    // 1. Generate Dropdowns (1-30) for both Upload and Result
+    const uploadSelect = document.getElementById('uploadTaskSelect');
+    const resultSelect = document.getElementById('resultTaskSelect');
 
-            // Validation
-            if (!taskName) {
-                statusDiv.innerText = "Please select a Task number.";
-                statusDiv.className = "error";
-                return;
-            }
-            if (!file) {
-                statusDiv.innerText = "Please select a file to upload.";
-                statusDiv.className = "error";
-                return;
-            }
+    for (let i = 1; i <= 30; i++) {
+        let option1 = document.createElement('option');
+        option1.value = `Task ${i}`;
+        option1.text = `Task ${i}`;
+        uploadSelect.appendChild(option1);
 
-            btn.innerText = "Uploading...";
-            btn.disabled = true;
+        let option2 = document.createElement('option');
+        option2.value = `Task ${i}`;
+        option2.text = `Task ${i}`;
+        resultSelect.appendChild(option2);
+    }
 
-            // Read file as Base64
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            
-            reader.onload = async function() {
-                const contentBase64 = reader.result.split(',')[1]; // Remove "data:image..." prefix
+    // --- YOUR NEW SCRIPT URL ---
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM4OyL8Vo0SrO1fh4aGud1Dpt55wpKLa1G34_CePJDj7W3stEeDCj-dA_AyCULpPcO/exec";
 
-                // GitHub API Path: Task Folder / File Name
-                // Example: Task 1/assignment.pdf
-                const path = `${taskName}/${file.name}`;
-                const apiUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`;
+    // --- FUNCTION 1: UPLOAD FILE ---
+    function uploadFile() {
+        const fileInput = document.getElementById('fileInput');
+        const taskName = document.getElementById('uploadTaskSelect').value;
+        const statusDiv = document.getElementById('uploadStatus');
+        const btn = document.getElementById('uploadBtn');
 
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `Bearer ${GITHUB_TOKEN}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            message: `Student upload for ${taskName}`,
-                            content: contentBase64
-                        })
-                    });
-
-                    if (response.ok) {
-                        statusDiv.innerText = "File Uploaded Successfully!";
-                        statusDiv.className = "success";
-                        fileInput.value = ""; // Clear input
-                    } else {
-                        const errorData = await response.json();
-                        throw new Error(errorData.message);
-                    }
-                } catch (error) {
-                    console.error(error);
-                    statusDiv.innerText = "Upload Failed: " + error.message;
-                    statusDiv.className = "error";
-                } finally {
-                    btn.innerText = "UPLOAD";
-                    btn.disabled = false;
-                }
-            };
+        if (fileInput.files.length === 0) {
+            statusDiv.innerText = "Please select a file first.";
+            statusDiv.className = "status error";
+            return;
         }
-    </script>
+
+        const file = fileInput.files[0];
+        // File size check (Optional: Limit to 10MB)
+        if (file.size > 10 * 1024 * 1024) {
+            statusDiv.innerText = "File is too large (Max 10MB).";
+            statusDiv.className = "status error";
+            return;
+        }
+
+        const reader = new FileReader();
+
+        btn.innerText = "Uploading...";
+        btn.disabled = true;
+        statusDiv.innerText = "";
+
+        reader.onload = function(e) {
+            const payload = {
+                action: "upload",  // Tell script this is an upload
+                filename: file.name,
+                mimeType: file.type,
+                file: e.target.result,
+                task: taskName
+            };
+
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "text/plain" },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                statusDiv.innerText = "File Uploaded Successfully!";
+                statusDiv.className = "status success";
+                btn.innerText = "UPLOAD FILE";
+                btn.disabled = false;
+                fileInput.value = "";
+            }).catch(err => {
+                statusDiv.innerText = "Error uploading file.";
+                statusDiv.className = "status error";
+                btn.disabled = false;
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // --- FUNCTION 2: FETCH RESULTS ---
+    function fetchResult() {
+        const taskName = document.getElementById('resultTaskSelect').value;
+        const resultArea = document.getElementById('resultArea');
+        const tbody = document.getElementById('resultBody');
+        const loader = document.getElementById('loadingResult');
+        const statusDiv = document.getElementById('resultStatus');
+
+        // Reset UI
+        resultArea.style.display = 'none';
+        tbody.innerHTML = '';
+        statusDiv.innerText = '';
+        loader.style.display = 'block';
+
+        // Prepare Payload
+        const payload = {
+            action: "getResult", // Tell script we want results
+            task: taskName
+        };
+
+        // Standard FETCH for Results (Needs to read JSON response)
+        fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(response => {
+            loader.style.display = 'none';
+            
+            if (response.status === "success") {
+                const data = response.data;
+                // data[0] is Header (Name, Marks), data[1] onwards are students
+                
+                if (data.length <= 1) {
+                    statusDiv.innerText = "Marks not updated yet for " + taskName;
+                    statusDiv.className = "status error";
+                    return;
+                }
+
+                // Loop through rows (Start from 1 to skip header)
+                for (let i = 1; i < data.length; i++) {
+                    let row = data[i];
+                    let name = row[0];
+                    let marks = row[1];
+                    
+                    let tr = `<tr>
+                        <td>${name}</td>
+                        <td style="text-align: right;"><span class="badge">${marks}</span></td>
+                    </tr>`;
+                    tbody.innerHTML += tr;
+                }
+                resultArea.style.display = 'block';
+            } else {
+                statusDiv.innerText = "No Result sheet found for " + taskName;
+                statusDiv.className = "status error";
+            }
+        })
+        .catch(err => {
+            loader.style.display = 'none';
+            // Agar CORS error aye, to mostly URL ghalat hota hai ya permissions
+            console.error(err);
+            statusDiv.innerText = "Could not fetch result. Check internet or try again.";
+            statusDiv.className = "status error";
+        });
+    }
+</script>
+
 </body>
 </html>
