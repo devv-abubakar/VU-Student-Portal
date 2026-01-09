@@ -6,6 +6,7 @@
     <title>VU Student Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* --- MATERIAL DESIGN CSS --- */
         :root { --primary-color: #6200ea; --bg-color: #f0f2f5; --card-bg: #ffffff; }
         body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); margin: 0; display: flex; justify-content: center; padding: 40px 20px; min-height: 100vh; }
         
@@ -48,8 +49,7 @@
         <h2>Upload Assignment</h2>
         <div style="margin-bottom: 20px; text-align: left;">
             <label>Select Task</label>
-            <select id="uploadTaskSelect">
-                </select>
+            <select id="uploadTaskSelect"></select>
         </div>
         <div style="margin-bottom: 20px; text-align: left;">
             <label>Attach File</label>
@@ -63,12 +63,10 @@
         <h2>Result of Tasks</h2>
         <div style="text-align: left;">
             <label>Select Task to View Marks</label>
-            <select id="resultTaskSelect" onchange="fetchResult()">
+            <select id="resultTaskSelect" onchange="showManualResult()">
                 <option value="" disabled selected>-- Select Task --</option>
-                </select>
+            </select>
         </div>
-
-        <div id="loadingResult" style="display:none; margin-top:15px; color:#666; font-size:13px;">Checking records...</div>
         
         <div id="resultArea">
             <table id="resultTable">
@@ -88,26 +86,47 @@
 </div>
 
 <script>
-    // 1. Generate Dropdowns (1-30) for both Upload and Result
+    // ==========================================
+    // 1. RESULT DATA (YAHAN EDIT KAREIN)
+    // ==========================================
+    // Jab bhi result update karna ho, bas yahan data add karein.
+    
+    const allResults = {
+        "Task 1": [
+            { name: "Ali Raza", marks: "8/10" },
+            { name: "Sara Khan", marks: "9.5/10" },
+            { name: "Ahmed", marks: "7/10" }
+        ],
+        "Task 2": [
+            { name: "Ali Raza", marks: "10/10" },
+            { name: "Zainab", marks: "8/10" }
+        ],
+        "Task 3": [
+            // Abhi khali hai, baad mein add karein
+        ]
+    };
+
+    // ==========================================
+    // 2. CONFIGURATION & DROPDOWNS
+    // ==========================================
+    
     const uploadSelect = document.getElementById('uploadTaskSelect');
     const resultSelect = document.getElementById('resultTaskSelect');
 
+    // 30 Tasks Generate karna
     for (let i = 1; i <= 30; i++) {
-        let option1 = document.createElement('option');
-        option1.value = `Task ${i}`;
-        option1.text = `Task ${i}`;
-        uploadSelect.appendChild(option1);
-
-        let option2 = document.createElement('option');
-        option2.value = `Task ${i}`;
-        option2.text = `Task ${i}`;
-        resultSelect.appendChild(option2);
+        let t = `Task ${i}`;
+        uploadSelect.add(new Option(t, t));
+        resultSelect.add(new Option(t, t));
     }
 
-    // --- YOUR NEW SCRIPT URL ---
+    // Aapka Google Apps Script URL (Upload k liye)
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM4OyL8Vo0SrO1fh4aGud1Dpt55wpKLa1G34_CePJDj7W3stEeDCj-dA_AyCULpPcO/exec";
 
-    // --- FUNCTION 1: UPLOAD FILE ---
+
+    // ==========================================
+    // 3. UPLOAD LOGIC (Purani Wali - No Change)
+    // ==========================================
     function uploadFile() {
         const fileInput = document.getElementById('fileInput');
         const taskName = document.getElementById('uploadTaskSelect').value;
@@ -115,28 +134,20 @@
         const btn = document.getElementById('uploadBtn');
 
         if (fileInput.files.length === 0) {
-            statusDiv.innerText = "Please select a file first.";
-            statusDiv.className = "status error";
-            return;
+            statusDiv.innerText = "Please select a file first."; statusDiv.className = "status error"; return;
         }
 
         const file = fileInput.files[0];
-        // File size check (Optional: Limit to 10MB)
-        if (file.size > 10 * 1024 * 1024) {
-            statusDiv.innerText = "File is too large (Max 10MB).";
-            statusDiv.className = "status error";
-            return;
+        if (file.size > 10 * 1024 * 1024) { // 10MB Check
+            statusDiv.innerText = "File is too large (Max 10MB)."; statusDiv.className = "status error"; return;
         }
 
         const reader = new FileReader();
-
-        btn.innerText = "Uploading...";
-        btn.disabled = true;
-        statusDiv.innerText = "";
+        btn.innerText = "Uploading..."; btn.disabled = true; statusDiv.innerText = "";
 
         reader.onload = function(e) {
             const payload = {
-                action: "upload",  // Tell script this is an upload
+                action: "upload",
                 filename: file.name,
                 mimeType: file.type,
                 file: e.target.result,
@@ -144,89 +155,50 @@
             };
 
             fetch(SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
+                method: "POST", mode: "no-cors",
                 headers: { "Content-Type": "text/plain" },
                 body: JSON.stringify(payload)
             }).then(() => {
-                statusDiv.innerText = "File Uploaded Successfully!";
-                statusDiv.className = "status success";
-                btn.innerText = "UPLOAD FILE";
-                btn.disabled = false;
-                fileInput.value = "";
+                statusDiv.innerText = "File Uploaded Successfully!"; statusDiv.className = "status success";
+                btn.innerText = "Upload File"; btn.disabled = false; fileInput.value = "";
             }).catch(err => {
-                statusDiv.innerText = "Error uploading file.";
-                statusDiv.className = "status error";
-                btn.disabled = false;
+                statusDiv.innerText = "Error uploading file."; statusDiv.className = "status error"; btn.disabled = false;
             });
         };
         reader.readAsDataURL(file);
     }
 
-    // --- FUNCTION 2: FETCH RESULTS ---
-    function fetchResult() {
+    // ==========================================
+    // 4. RESULT LOGIC (New - Manual Update)
+    // ==========================================
+    function showManualResult() {
         const taskName = document.getElementById('resultTaskSelect').value;
         const resultArea = document.getElementById('resultArea');
         const tbody = document.getElementById('resultBody');
-        const loader = document.getElementById('loadingResult');
         const statusDiv = document.getElementById('resultStatus');
 
-        // Reset UI
-        resultArea.style.display = 'none';
+        // Clear Purana Data
         tbody.innerHTML = '';
         statusDiv.innerText = '';
-        loader.style.display = 'block';
+        resultArea.style.display = 'none';
 
-        // Prepare Payload
-        const payload = {
-            action: "getResult", // Tell script we want results
-            task: taskName
-        };
-
-        // Standard FETCH for Results (Needs to read JSON response)
-        fetch(SCRIPT_URL, {
-            method: "POST",
-            body: JSON.stringify(payload)
-        })
-        .then(res => res.json())
-        .then(response => {
-            loader.style.display = 'none';
+        // Check agar data majood hai
+        if (allResults[taskName] && allResults[taskName].length > 0) {
             
-            if (response.status === "success") {
-                const data = response.data;
-                // data[0] is Header (Name, Marks), data[1] onwards are students
-                
-                if (data.length <= 1) {
-                    statusDiv.innerText = "Marks not updated yet for " + taskName;
-                    statusDiv.className = "status error";
-                    return;
-                }
-
-                // Loop through rows (Start from 1 to skip header)
-                for (let i = 1; i < data.length; i++) {
-                    let row = data[i];
-                    let name = row[0];
-                    let marks = row[1];
-                    
-                    let tr = `<tr>
-                        <td>${name}</td>
-                        <td style="text-align: right;"><span class="badge">${marks}</span></td>
-                    </tr>`;
-                    tbody.innerHTML += tr;
-                }
-                resultArea.style.display = 'block';
-            } else {
-                statusDiv.innerText = "No Result sheet found for " + taskName;
-                statusDiv.className = "status error";
-            }
-        })
-        .catch(err => {
-            loader.style.display = 'none';
-            // Agar CORS error aye, to mostly URL ghalat hota hai ya permissions
-            console.error(err);
-            statusDiv.innerText = "Could not fetch result. Check internet or try again.";
+            // Loop chala kar table banayen
+            allResults[taskName].forEach(student => {
+                let row = `<tr>
+                    <td>${student.name}</td>
+                    <td style="text-align: right;"><span class="badge">${student.marks}</span></td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+            
+            resultArea.style.display = 'block';
+        } else {
+            statusDiv.innerText = "Result not announced yet for " + taskName;
             statusDiv.className = "status error";
-        });
+        }
     }
 </script>
 
