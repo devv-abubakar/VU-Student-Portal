@@ -108,7 +108,7 @@
 
 <script>
     // ==========================================
-    // 1. RESULT DATA (YAHAN EDIT KAREIN)
+    // 1. RESULT DATA (UPDATED)
     // ==========================================
     
     const allResults = {
@@ -133,9 +133,23 @@
             { name: "Shah Faisal", marks: "6/10" }
         ],
         "Task 2": [
-            // Example Data for Task 2
-            { name: "Ali Raza", marks: "10/10" },
-            { name: "Zainab", marks: "8/10" }
+            { name: "Atika Khalid", marks: "9/10" },
+            { name: "AYMAAMJAD", marks: "9/10" },
+            { name: "DanishRaza", marks: "9/10" },
+            { name: "HadiaButt", marks: "8.5/10" },
+            { name: "Hamza", marks: "8/10" },
+            { name: "Hania Noor", marks: "8.5/10" },
+            { name: "IqraJameel", marks: "9/10" },
+            { name: "LizaIkram", marks: "10/10" },
+            { name: "Moeen ud Din", marks: "8.5/10" },
+            { name: "Muhammad Asad", marks: "10/10" },
+            { name: "MuhammadTayyab", marks: "9/10" },
+            { name: "Rabia", marks: "9.5/10" },
+            { name: "RabiaZahoor", marks: "8.5/10" },
+            { name: "Ruhma", marks: "8.5/10" },
+            { name: "saba", marks: "9/10" },
+            { name: "Shah Faisal", marks: "8/10" },
+            { name: "Syeda AneeqaZia", marks: "9.5/10" }
         ],
         "Task 3": []
     };
@@ -147,15 +161,15 @@
     const taskSummaries = {
         "Task 1": `
             <div class="summary-box">
-                <div class="summary-header"> Feedback & Mistakes Summary</div>
+                <div class="summary-header">📊 Feedback & Mistakes Summary (Task 1)</div>
                 
                 <div class="summary-item">
-                    <span class="tag-green"> Perfect (10/10):</span> Iqra, Tayyab, Liza, Rabia, Ruhma ne bilkul clean HTML5 code likha.
+                    <span class="tag-green">✅ Perfect (10/10):</span> Iqra, Tayyab, Liza, Rabia, Ruhma ne bilkul clean HTML5 code likha.
                 </div>
                 <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
                 
                 <div class="summary-item">
-                    <span class="tag-orange"> Common Minor Mistakes (9-9.5):</span>
+                    <span class="tag-orange">⚠️ Common Minor Mistakes (9-9.5):</span>
                     <ul style="margin:5px 0; padding-left:20px;">
                         <li><strong>Missing Doctype:</strong> (Ayesha, Burhan, Saba) File ke start mein <code>&lt;!DOCTYPE html&gt;</code> nahi tha.</li>
                         <li><strong>Deprecated Tags:</strong> (Ayma, Asad) <code>&lt;center&gt;</code> tag use kiya jo ab use nahi hota.</li>
@@ -164,7 +178,7 @@
                 </div>
 
                 <div class="summary-item">
-                    <span class="tag-red"> Major & Critical Errors (6-8):</span>
+                    <span class="tag-red">❌ Major & Critical Errors (6-8):</span>
                     <ul style="margin:5px 0; padding-left:20px;">
                         <li><strong>Structure:</strong> (Hadia, Atika, Hamza) Old HTML Syntax use kiya (Old meta tags, center tags).</li>
                         <li><strong>Wrong Nesting:</strong> (Moeen, Shah Faisal) <br>
@@ -174,7 +188,37 @@
                 </div>
             </div>
         `,
-        "Task 2": "" // Task 2 ki summary yahan ayegi jab check hoga
+        "Task 2": `
+            <div class="summary-box">
+                <div class="summary-header">📊 Feedback & Mistakes Summary (Task 2)</div>
+                
+                <div class="summary-item">
+                    <span class="tag-green">✅ Top Performers (10/10):</span> 
+                    <strong>Liza Ikram & Muhammad Asad</strong>. <br>
+                    Inn dono ne perfect nesting, valid HTML5, aur clean formatting use ki. Asad ne Meta tags bhi use kiye.
+                </div>
+                
+                <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
+                
+                <div class="summary-item">
+                    <span class="tag-orange">⚠️ Nesting Errors (Cross Nesting):</span>
+                    <ul style="margin:5px 0; padding-left:20px;">
+                        <li><strong>Shah Faisal:</strong> List (<code>ul/ol</code>) ko Heading (<code>h3</code>) ke andar likha. Yeh invalid hai.</li>
+                        <li><strong>Rumi:</strong> Heading (<code>h2</code>) ko Underline (<code>u</code>) ke andar likha. Block element inline mein nahi ata.</li>
+                        <li><strong>Saba:</strong> <code>&lt;u&gt;&lt;b&gt;...&lt;/u&gt;&lt;/b&gt;</code> (Order galat band kiya).</li>
+                    </ul>
+                </div>
+
+                <div class="summary-item">
+                    <span class="tag-red">❌ Common Mistakes:</span>
+                    <ul style="margin:5px 0; padding-left:20px;">
+                        <li><strong>Deprecated Tags:</strong> (Hania, Shah Faisal, RabiaZahoor, Hamza) <code>align="center"</code> ya <code>&lt;center&gt;</code> use kiya. CSS use karein.</li>
+                        <li><strong>Link Error:</strong> (Rabia) Link mein <code>https://</code> nahi lagaya.</li>
+                        <li><strong>Missing Doctype:</strong> (Hadia, Moeen) File start mein Doctype missing tha.</li>
+                    </ul>
+                </div>
+            </div>
+        `
     };
 
     // ==========================================
@@ -238,18 +282,18 @@
     }
 
     // ==========================================
-    // 5. RESULT LOGIC (Updated with Summary)
+    // 5. RESULT LOGIC
     // ==========================================
     function showManualResult() {
         const taskName = document.getElementById('resultTaskSelect').value;
         const resultArea = document.getElementById('resultArea');
         const tbody = document.getElementById('resultBody');
         const statusDiv = document.getElementById('resultStatus');
-        const summaryDiv = document.getElementById('summaryContent'); // New Div
+        const summaryDiv = document.getElementById('summaryContent'); 
 
         // Clear Purana Data
         tbody.innerHTML = '';
-        summaryDiv.innerHTML = ''; // Clear Summary
+        summaryDiv.innerHTML = ''; 
         statusDiv.innerText = '';
         resultArea.style.display = 'none';
 
@@ -283,7 +327,3 @@
 
 </body>
 </html>
-
-
-
-
