@@ -39,6 +39,24 @@
         .status { margin-top: 15px; font-size: 13px; font-weight: 500; }
         .success { color: green; }
         .error { color: red; }
+
+        /* --- NEW SUMMARY SECTION STYLING --- */
+        .summary-box {
+            text-align: left;
+            background: #fff8e1;
+            border-left: 5px solid #ffca28;
+            padding: 15px;
+            margin-top: 25px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444;
+        }
+        .summary-header { font-weight: 700; color: #bf360c; margin-bottom: 8px; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
+        .summary-item { margin-bottom: 8px; }
+        .tag-red { color: #d32f2f; font-weight: 600; }
+        .tag-orange { color: #ef6c00; font-weight: 600; }
+        .tag-green { color: #2e7d32; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -79,6 +97,9 @@
                 <tbody id="resultBody">
                     </tbody>
             </table>
+
+            <div id="summaryContent"></div>
+
         </div>
         <div id="resultStatus" class="status"></div>
     </div>
@@ -89,58 +110,90 @@
     // ==========================================
     // 1. RESULT DATA (YAHAN EDIT KAREIN)
     // ==========================================
-    // Jab bhi result update karna ho, bas yahan data add karein.
     
     const allResults = {
         "Task 1": [
-            
-  { name: "Atika Khalid", marks: "8/10" },
-  { name: "Ayesha Khan", marks: "9/10" },
-  { name: "Burhan Khan", marks: "9/10" },
-  { name: "Danish Raza", marks: "9/10" },
-  { name: "Hadia Butt", marks: "8/10" },
-  { name: "Hamza", marks: "8/10" },
-  { name: "Hania Noor", marks: "8/10" },
-  { name: "Iqra Jameel", marks: "10/10" },
-  { name: "Liza Ikram", marks: "10/10" },
-  { name: "Moeen", marks: "7/10" },
-  { name: "Muhammad Asad", marks: "9/10" },
-  { name: "Muhammad Tayyab", marks: "10/10" },
-  { name: "Rabia Zahid", marks: "10/10" },
-  { name: "Rabia Zahoor", marks: "10/10" },
-  { name: "Ruhma", marks: "10/10" },
-  { name: "saba", marks: "9/10" },
-  { name: "Shah Faisal", marks: "6/10" }
+            { name: "Atika Khalid", marks: "8/10" },
+            { name: "AyeshaKhan", marks: "9/10" },
+            { name: "BurhanKhan", marks: "9/10" },
+            { name: "DanishRaza", marks: "9/10" },
+            { name: "HadiaButt", marks: "8/10" },
+            { name: "Hamza", marks: "8/10" },
+            { name: "Hania Noor", marks: "8/10" },
+            { name: "IqraJameel", marks: "10/10" },
+            { name: "LizaIkram", marks: "10/10" },
+            { name: "Moeen ud Din", marks: "7/10" },
+            { name: "Muhammad Asad", marks: "9/10" },
+            { name: "MuhammadTayyab", marks: "9.5/10" },
+            { name: "RabiaZahid", marks: "10/10" },
+            { name: "RabiaZahoor", marks: "10/10" },
+            { name: "Ruhma", marks: "10/10" },
+            { name: "saba", marks: "9/10" },
+            { name: "Shah Faisal", marks: "6/10" }
         ],
         "Task 2": [
+            // Example Data for Task 2
             { name: "Ali Raza", marks: "10/10" },
             { name: "Zainab", marks: "8/10" }
         ],
-        "Task 3": [
-            // Abhi khali hai, baad mein add karein
-        ]
+        "Task 3": []
     };
 
     // ==========================================
-    // 2. CONFIGURATION & DROPDOWNS
+    // 2. SUMMARY DATA (MISTAKES SUMMARY)
+    // ==========================================
+    
+    const taskSummaries = {
+        "Task 1": `
+            <div class="summary-box">
+                <div class="summary-header">📊 Feedback & Mistakes Summary</div>
+                
+                <div class="summary-item">
+                    <span class="tag-green">✅ Perfect (10/10):</span> Iqra, Liza, Rabia, Ruhma ne bilkul clean HTML5 code likha.
+                </div>
+                <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
+                
+                <div class="summary-item">
+                    <span class="tag-orange">⚠️ Common Minor Mistakes (9-9.5):</span>
+                    <ul style="margin:5px 0; padding-left:20px;">
+                        <li><strong>Missing Doctype:</strong> (Ayesha, Burhan, Saba) File ke start mein <code>&lt;!DOCTYPE html&gt;</code> nahi tha.</li>
+                        <li><strong>Deprecated Tags:</strong> (Asad) <code>&lt;center&gt;</code> tag use kiya jo ab use nahi hota.</li>
+                        <li><strong>Styling:</strong> (Danish) Tags mixed case mein likhay (e.g. <code>&lt;H4&gt;</code>).</li>
+                    </ul>
+                </div>
+
+                <div class="summary-item">
+                    <span class="tag-red">❌ Major & Critical Errors (6-8):</span>
+                    <ul style="margin:5px 0; padding-left:20px;">
+                        <li><strong>Structure:</strong> (Hadia, Atika, Hamza) Old HTML Syntax use kiya (Old meta tags, center tags).</li>
+                        <li><strong>Wrong Nesting:</strong> (Moeen, Shah Faisal) <br>
+                        <em>Galti:</em> Heading tag ko Paragraph ya Underline tag ke andar band kiya. <br>
+                        <em>Sahi:</em> <code>&lt;h1&gt;</code> hamesha block element hai, kisi inline tag ke andar nahi aata.</li>
+                    </ul>
+                </div>
+            </div>
+        `,
+        "Task 2": "" // Task 2 ki summary yahan ayegi jab check hoga
+    };
+
+    // ==========================================
+    // 3. CONFIGURATION & DROPDOWNS
     // ==========================================
     
     const uploadSelect = document.getElementById('uploadTaskSelect');
     const resultSelect = document.getElementById('resultTaskSelect');
 
-    // 30 Tasks Generate karna
     for (let i = 1; i <= 30; i++) {
         let t = `Task ${i}`;
         uploadSelect.add(new Option(t, t));
         resultSelect.add(new Option(t, t));
     }
 
-    // Aapka Google Apps Script URL (Upload k liye)
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM4OyL8Vo0SrO1fh4aGud1Dpt55wpKLa1G34_CePJDj7W3stEeDCj-dA_AyCULpPcO/exec";
 
 
     // ==========================================
-    // 3. UPLOAD LOGIC (Purani Wali - No Change)
+    // 4. UPLOAD LOGIC
     // ==========================================
     function uploadFile() {
         const fileInput = document.getElementById('fileInput');
@@ -153,7 +206,7 @@
         }
 
         const file = fileInput.files[0];
-        if (file.size > 10 * 1024 * 1024) { // 10MB Check
+        if (file.size > 10 * 1024 * 1024) { 
             statusDiv.innerText = "File is too large (Max 10MB)."; statusDiv.className = "status error"; return;
         }
 
@@ -184,23 +237,25 @@
     }
 
     // ==========================================
-    // 4. RESULT LOGIC (New - Manual Update)
+    // 5. RESULT LOGIC (Updated with Summary)
     // ==========================================
     function showManualResult() {
         const taskName = document.getElementById('resultTaskSelect').value;
         const resultArea = document.getElementById('resultArea');
         const tbody = document.getElementById('resultBody');
         const statusDiv = document.getElementById('resultStatus');
+        const summaryDiv = document.getElementById('summaryContent'); // New Div
 
         // Clear Purana Data
         tbody.innerHTML = '';
+        summaryDiv.innerHTML = ''; // Clear Summary
         statusDiv.innerText = '';
         resultArea.style.display = 'none';
 
         // Check agar data majood hai
         if (allResults[taskName] && allResults[taskName].length > 0) {
             
-            // Loop chala kar table banayen
+            // 1. Table Data Fill karein
             allResults[taskName].forEach(student => {
                 let row = `<tr>
                     <td>${student.name}</td>
@@ -209,6 +264,14 @@
                 tbody.innerHTML += row;
             });
             
+            // 2. Summary Check karein aur Show karein
+            if (taskSummaries[taskName]) {
+                summaryDiv.innerHTML = taskSummaries[taskName];
+                summaryDiv.style.display = 'block';
+            } else {
+                summaryDiv.style.display = 'none';
+            }
+
             resultArea.style.display = 'block';
         } else {
             statusDiv.innerText = "Result not announced yet for " + taskName;
@@ -219,6 +282,3 @@
 
 </body>
 </html>
-
-
-
