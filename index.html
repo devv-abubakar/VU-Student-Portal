@@ -202,21 +202,43 @@
                 <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
                 
                 <div class="summary-item">
-    <span class="tag-orange">⚠️ Nesting & Code Style Errors:</span>
-    <ul style="margin:5px 0; padding-left:20px;">
-        <li><strong>Shah Faisal:</strong> List (<code>ul/ol</code>) ko Heading (<code>h3</code>) ke andar likha. Yeh invalid hai.</li>
-        <li><strong>Rumi:</strong> Heading (<code>h2</code>) ko Underline (<code>u</code>) ke andar likha. Block element inline mein nahi ata.</li>
-        <li><strong>Saba:</strong> <code>&lt;u&gt;&lt;b&gt;...&lt;/u&gt;&lt;/b&gt;</code> (Order galat band kiya).</li>
-        <li><strong>Burhan:</strong> (Again) <code>&lt;!DOCTYPE html&gt;</code> missing tha. Headings (h1-h6) already bold hoti hain, unke andar <code>&lt;b&gt;</code> lagana zaroori nahi.</li>
-    </ul>
-</div>
+                    <span class="tag-green">✨ Good Effort (9.5/10):</span>
+                    <ul style="margin:5px 0; padding-left:20px;">
+                        <li><strong>Syeda AneeqaZia:</strong> Code acha tha, bas <code>&lt;h1&gt;</code> ke andar <code>&lt;u&gt;</code> use kiya. CSS use karna behtar hai.</li>
+                        <li><strong>Rabia:</strong> Output theek tha, lekin code indentation (safai) behtar ki ja sakti hai.</li>
+                    </ul>
+                </div>
+
+                <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
 
                 <div class="summary-item">
-                    <span class="tag-red">❌ Common Mistakes:</span>
+                    <span class="tag-orange">⚠️ Nesting & Code Structure Errors:</span>
                     <ul style="margin:5px 0; padding-left:20px;">
-                        <li><strong>Deprecated Tags:</strong> (Hania, Shah Faisal, RabiaZahoor, Hamza) <code>align="center"</code> ya <code>&lt;center&gt;</code> use kiya. CSS use karein.</li>
-                        <li><strong>Link Error:</strong> (Rabia) Link mein <code>https://</code> nahi lagaya.</li>
-                        <li><strong>Missing Doctype:</strong> (Hadia, Moeen) File start mein Doctype missing tha.</li>
+                        <li><strong>Shah Faisal:</strong> List (<code>ul/ol</code>) ko Heading (<code>h3</code>) ke andar likha. Yeh invalid hai.</li>
+                        <li><strong>Ruhma (Rumi):</strong> Heading (<code>h2</code>) ko Underline (<code>u</code>) ke andar likha. Block element inline mein nahi ata.</li>
+                        <li><strong>saba:</strong> <code>&lt;u&gt;&lt;b&gt;...&lt;/u&gt;&lt;/b&gt;</code> (Tags galat order mein band kiye - Cross Nesting).</li>
+                        <li><strong>Burhan Khan:</strong> File mein <code>&lt;!DOCTYPE html&gt;</code> missing tha. Headings (h1-h6) already bold hoti hain, unke andar <code>&lt;b&gt;</code> lagana zaroori nahi.</li>
+                        <li><strong>AYMA AMJAD:</strong> Over-nesting ki (e.g., <code>&lt;h1&gt;&lt;mark&gt;&lt;u&gt;</code>). Bohot ziyada tags ek sath use karna code ko slow karta hai.</li>
+                    </ul>
+                </div>
+
+                <div class="summary-item">
+                    <span class="tag-orange">🔍 Typos, Spelling & Redundant Code:</span>
+                    <ul style="margin:5px 0; padding-left:20px;">
+                        <li><strong>Iqra Jameel:</strong> Start mein typo tha <code>=&lt;!DOCTYPE</code> (Extra <code>=</code> sign).</li>
+                        <li><strong>Danish Raza:</strong> Syntax typo (<code>Grocery&gt;</code>) aur Spelling mistakes (Yougurt).</li>
+                        <li><strong>Atika Khalid:</strong> Spelling mistakes (Importence, tages). Spell check zaroor karein.</li>
+                        <li><strong>Muhammad Tayyab:</strong> Headings ke andar unnecessary <code>&lt;b&gt;</code> tag use kiya.</li>
+                    </ul>
+                </div>
+
+                <div class="summary-item">
+                    <span class="tag-red">❌ Deprecated Tags & Critical Issues:</span>
+                    <ul style="margin:5px 0; padding-left:20px;">
+                        <li><strong>Hamza & Hania Noor:</strong> <code>&lt;center&gt;</code> tag ya <code>align="center"</code> use kiya. HTML5 mein yeh allow nahi, CSS use karein.</li>
+                        <li><strong>Rabia Zahoor:</strong> <code>align="center"</code> use kiya aur Link broken tha (missing <code>https://</code>).</li>
+                        <li><strong>Hadia Butt:</strong> Doctype missing tha aur Live Server ki extra script code mein reh gayi thi.</li>
+                        <li><strong>Moeen ud Din:</strong> File ke start mein Doctype missing tha.</li>
                     </ul>
                 </div>
             </div>
@@ -329,4 +351,5 @@
 
 </body>
 </html>
+
 
