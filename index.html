@@ -501,90 +501,93 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM4OyL8Vo0SrO1fh4aGud1Dpt55wpKLa1G34_CePJDj7W3stEeDCj-dA_AyCULpPcO/exec";
 
 
-    
+
+
 
     // ==========================================
-    // 4. UPLOAD LOGIC (CHUNKED UPLOAD)
+
+    // 4. UPLOAD LOGIC
+
     // ==========================================
-    async function uploadFile() {
+
+    function uploadFile() {
+
         const fileInput = document.getElementById('fileInput');
+
         const taskName = document.getElementById('uploadTaskSelect').value;
+
         const statusDiv = document.getElementById('uploadStatus');
+
         const btn = document.getElementById('uploadBtn');
 
+
+
         if (fileInput.files.length === 0) {
+
             statusDiv.innerText = "Please select a file first."; statusDiv.className = "status error"; return;
+
         }
+
+
 
         const file = fileInput.files[0];
-        
-        // 1. Limit Check (Ab 100MB+ Allowed hai)
-        if (file.size > 105 * 1024 * 1024) { 
-            statusDiv.innerText = "File is too large (Max 100MB)."; statusDiv.className = "status error"; return;
+
+        if (file.size > 10 * 1024 * 1024) { 
+
+            statusDiv.innerText = "File is too large (Max 10MB)."; statusDiv.className = "status error"; return;
+
         }
 
-        btn.innerText = "Uploading..."; 
-        btn.disabled = true; 
-        statusDiv.innerText = "";
-        statusDiv.className = "status";
 
-        // 2. Chunk Settings (File ko tukron mein bhejna)
-        const CHUNK_SIZE = 2 * 1024 * 1024; // 2MB ka tukra (Safe Size)
-        let start = 0;
-        let fileId = ""; // Server se ID milegi
 
-        try {
-            while (start < file.size) {
-                const end = Math.min(start + CHUNK_SIZE, file.size);
-                const chunk = file.slice(start, end);
-                
-                // Read Chunk as Base64
-                const base64Data = await new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.onerror = (e) => reject(e);
-                    reader.readAsDataURL(chunk);
-                });
+        const reader = new FileReader();
 
-                const payload = {
-                    action: "upload",
-                    filename: file.name,
-                    mimeType: file.type,
-                    file: base64Data, // Chunk Data
-                    task: taskName,
-                    fileId: fileId // Pehli dafa empty hoga, phir update hoga
-                };
+        btn.innerText = "Uploading..."; btn.disabled = true; statusDiv.innerText = "";
 
-                // Send Chunk
-                const response = await fetch(SCRIPT_URL, {
-                    method: "POST",
-                    body: JSON.stringify(payload)
-                });
 
-                const result = await response.json();
 
-                if (result.status === "success") {
-                    fileId = result.fileId; // Save ID for next chunk
-                    start = end; // Move to next part
-                } else {
-                    throw new Error(result.message);
-                }
-            }
+        reader.onload = function(e) {
 
-            // Loop finished successfully
-            statusDiv.innerText = "File Uploaded Successfully!"; 
-            statusDiv.className = "status success";
-            btn.innerText = "Upload File"; 
-            btn.disabled = false; 
-            fileInput.value = "";
+            const payload = {
 
-        } catch (error) {
-            console.error(error);
-            statusDiv.innerText = "Error: " + error.message; 
-            statusDiv.className = "status error"; 
-            btn.disabled = false;
-            btn.innerText = "Upload File";
-        }
+                action: "upload",
+
+                filename: file.name,
+
+                mimeType: file.type,
+
+                file: e.target.result,
+
+                task: taskName
+
+            };
+
+
+
+            fetch(SCRIPT_URL, {
+
+                method: "POST", mode: "no-cors",
+
+                headers: { "Content-Type": "text/plain" },
+
+                body: JSON.stringify(payload)
+
+            }).then(() => {
+
+                statusDiv.innerText = "File Uploaded Successfully!"; statusDiv.className = "status success";
+
+                btn.innerText = "Upload File"; btn.disabled = false; fileInput.value = "";
+
+            }).catch(err => {
+
+                statusDiv.innerText = "Error uploading file."; statusDiv.className = "status error"; btn.disabled = false;
+
+            });
+
+        };
+
+        reader.readAsDataURL(file);
+
     }
 
 
@@ -680,4 +683,3 @@
 </body>
 
 </html>
-
