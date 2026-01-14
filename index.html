@@ -6,57 +6,37 @@
     <title>VU Student Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- MATERIAL DESIGN CSS --- */
         :root { --primary-color: #6200ea; --bg-color: #f0f2f5; --card-bg: #ffffff; }
         body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); margin: 0; display: flex; justify-content: center; padding: 40px 20px; min-height: 100vh; }
-        
         .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 30px; }
-
-        /* Card Styling */
         .card { background: var(--card-bg); padding: 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); text-align: center; }
-        
         h2 { color: var(--primary-color); font-weight: 700; margin-top: 0; font-size: 22px; }
         label { display: block; text-align: left; font-weight: 600; font-size: 13px; color: #555; margin-bottom: 8px; margin-left: 5px; }
-        
         select, input[type="file"] { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; background: #fafafa; outline: none; font-family: 'Poppins'; box-sizing: border-box; }
         select:focus { border-color: var(--primary-color); background: #fff; }
-        
-        /* Buttons */
         button { width: 100%; padding: 14px; background-color: var(--primary-color); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; transition: 0.3s; margin-top: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
         button:hover { background-color: #3700b3; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(98, 0, 234, 0.2); }
         button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
-
-        /* Result Table Styling */
         #resultArea { margin-top: 20px; display: none; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
         th { background: #f8f9fa; color: #444; padding: 10px; border-bottom: 2px solid #eee; text-align: left; font-weight: 600; }
         td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; color: #333; }
         tr:last-child td { border-bottom: none; }
         tr:hover td { background-color: #f9f9f9; }
-
         .badge { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 12px; }
-
         .status { margin-top: 15px; font-size: 13px; font-weight: 500; }
         .success { color: green; }
         .error { color: red; }
-
-        /* --- NEW SUMMARY SECTION STYLING --- */
-        .summary-box {
-            text-align: left;
-            background: #fff8e1;
-            border-left: 5px solid #ffca28;
-            padding: 15px;
-            margin-top: 25px;
-            border-radius: 8px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #444;
-        }
+        .summary-box { text-align: left; background: #fff8e1; border-left: 5px solid #ffca28; padding: 15px; margin-top: 25px; border-radius: 8px; font-size: 13px; line-height: 1.6; color: #444; }
         .summary-header { font-weight: 700; color: #bf360c; margin-bottom: 8px; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
         .summary-item { margin-bottom: 8px; }
         .tag-red { color: #d32f2f; font-weight: 600; }
         .tag-orange { color: #ef6c00; font-weight: 600; }
         .tag-green { color: #2e7d32; font-weight: 600; }
+        
+        .progress-container { width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-top: 15px; height: 10px; overflow: hidden; display: none; }
+        .progress-bar { height: 100%; width: 0%; background-color: #6200ea; transition: width 0.2s; }
+        .progress-text { margin-top: 5px; font-size: 12px; color: #666; font-weight: 600; display: none; }
     </style>
 </head>
 <body>
@@ -74,6 +54,12 @@
             <input type="file" id="fileInput">
         </div>
         <button id="uploadBtn" onclick="uploadFile()">Upload File</button>
+        
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">0%</div>
+
         <div id="uploadStatus" class="status"></div>
     </div>
 
@@ -95,7 +81,7 @@
                     </tr>
                 </thead>
                 <tbody id="resultBody">
-                    </tbody>
+                </tbody>
             </table>
 
             <div id="summaryContent"></div>
@@ -107,10 +93,6 @@
 </div>
 
 <script>
-    // ==========================================
-    // 1. RESULT DATA (UPDATED)
-    // ==========================================
-    
     const allResults = {
         "Task 1": [
             { name: "Atika Khalid", marks: "8/10" },
@@ -156,20 +138,14 @@
         "Task 3": []
     };
 
-    // ==========================================
-    // 2. SUMMARY DATA (MISTAKES SUMMARY)
-    // ==========================================
-    
     const taskSummaries = {
         "Task 1": `
             <div class="summary-box">
                 <div class="summary-header">📊 Feedback & Mistakes Summary (Task 1)</div>
-                
                 <div class="summary-item">
                     <span class="tag-green">✅ Perfect (10/10):</span> Iqra, Tayyab, Liza, Rabia, Ruhma and Aneeqa ne bilkul clean HTML5 code likha.
                 </div>
                 <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
-                
                 <div class="summary-item">
                     <span class="tag-orange">⚠️ Common Minor Mistakes (9-9.5):</span>
                     <ul style="margin:5px 0; padding-left:20px;">
@@ -178,7 +154,6 @@
                         <li><strong>Styling:</strong> (Danish) Tags mixed case mein likhay (e.g. <code>&lt;H4&gt;</code>).</li>
                     </ul>
                 </div>
-
                 <div class="summary-item">
                     <span class="tag-red">❌ Major & Critical Errors (6-8):</span>
                     <ul style="margin:5px 0; padding-left:20px;">
@@ -193,15 +168,12 @@
         "Task 2": `
             <div class="summary-box">
                 <div class="summary-header">📊 Feedback & Mistakes Summary (Task 2)</div>
-                
                 <div class="summary-item">
                     <span class="tag-green">✅ Top Performers (10/10):</span> 
                     <strong>Liza Ikram, Muhammad Asad, Syeda Aneeqa, Ayma Amjad & Rabia</strong>. <br>
                     In sab students ne behtareen kaam kiya aur full marks secure kiye.
                 </div>
-                
                 <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
-
                 <div class="summary-item">
                     <span class="tag-orange">⚠️ Nesting & Code Structure Errors:</span>
                     <ul style="margin:5px 0; padding-left:20px;">
@@ -211,7 +183,6 @@
                         <li><strong>Burhan Khan:</strong> File mein <code>&lt;!DOCTYPE html&gt;</code> missing tha. Headings (h1-h6) already bold hoti hain, unke andar <code>&lt;b&gt;</code> lagana zaroori nahi.</li>
                     </ul>
                 </div>
-
                 <div class="summary-item">
                     <span class="tag-orange">🔍 Typos, Spelling & Redundant Code:</span>
                     <ul style="margin:5px 0; padding-left:20px;">
@@ -221,7 +192,6 @@
                         <li><strong>Muhammad Tayyab:</strong> Headings ke andar unnecessary <code>&lt;b&gt;</code> tag use kiya.</li>
                     </ul>
                 </div>
-
                 <div class="summary-item">
                     <span class="tag-red">❌ Deprecated Tags & Critical Issues:</span>
                     <ul style="margin:5px 0; padding-left:20px;">
@@ -235,10 +205,6 @@
         `
     };
 
-    // ==========================================
-    // 3. CONFIGURATION & DROPDOWNS
-    // ==========================================
-    
     const uploadSelect = document.getElementById('uploadTaskSelect');
     const resultSelect = document.getElementById('resultTaskSelect');
 
@@ -250,27 +216,28 @@
 
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM4OyL8Vo0SrO1fh4aGud1Dpt55wpKLa1G34_CePJDj7W3stEeDCj-dA_AyCULpPcO/exec";
 
-
-    // ==========================================
-    // 4. UPLOAD LOGIC
-    // ==========================================
     function uploadFile() {
         const fileInput = document.getElementById('fileInput');
         const taskName = document.getElementById('uploadTaskSelect').value;
         const statusDiv = document.getElementById('uploadStatus');
         const btn = document.getElementById('uploadBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
 
         if (fileInput.files.length === 0) {
             statusDiv.innerText = "Please select a file first."; statusDiv.className = "status error"; return;
         }
 
         const file = fileInput.files[0];
-        if (file.size > 10 * 1024 * 1024) { 
-            statusDiv.innerText = "File is too large (Max 10MB)."; statusDiv.className = "status error"; return;
-        }
-
+        
         const reader = new FileReader();
-        btn.innerText = "Uploading..."; btn.disabled = true; statusDiv.innerText = "";
+        btn.innerText = "Processing..."; btn.disabled = true; statusDiv.innerText = "";
+        
+        progressContainer.style.display = "block";
+        progressText.style.display = "block";
+        progressBar.style.width = "0%";
+        progressText.innerText = "0% (Reading File...)";
 
         reader.onload = function(e) {
             const payload = {
@@ -281,23 +248,51 @@
                 task: taskName
             };
 
-            fetch(SCRIPT_URL, {
-                method: "POST", mode: "no-cors",
-                headers: { "Content-Type": "text/plain" },
-                body: JSON.stringify(payload)
-            }).then(() => {
-                statusDiv.innerText = "File Uploaded Successfully!"; statusDiv.className = "status success";
-                btn.innerText = "Upload File"; btn.disabled = false; fileInput.value = "";
-            }).catch(err => {
-                statusDiv.innerText = "Error uploading file."; statusDiv.className = "status error"; btn.disabled = false;
-            });
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", SCRIPT_URL);
+            xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+
+            xhr.upload.onprogress = function(event) {
+                if (event.lengthComputable) {
+                    const percentComplete = Math.round((event.loaded / event.total) * 100);
+                    progressBar.style.width = percentComplete + "%";
+                    progressText.innerText = percentComplete + "% (Uploading...)";
+                }
+            };
+
+            xhr.onload = function() {
+                if (xhr.status === 200 || xhr.status === 302) {
+                    progressBar.style.width = "100%";
+                    progressText.innerText = "100% Completed";
+                    statusDiv.innerText = "File Uploaded Successfully!"; 
+                    statusDiv.className = "status success";
+                    btn.innerText = "Upload File"; 
+                    btn.disabled = false; 
+                    fileInput.value = "";
+                    setTimeout(() => {
+                        progressContainer.style.display = "none";
+                        progressText.style.display = "none";
+                    }, 3000);
+                } else {
+                    statusDiv.innerText = "Upload failed. Server responded with status: " + xhr.status;
+                    statusDiv.className = "status error";
+                    btn.disabled = false;
+                    btn.innerText = "Upload File";
+                }
+            };
+
+            xhr.onerror = function() {
+                statusDiv.innerText = "Network Error. Please try again.";
+                statusDiv.className = "status error";
+                btn.disabled = false;
+                btn.innerText = "Upload File";
+            };
+
+            xhr.send(JSON.stringify(payload));
         };
         reader.readAsDataURL(file);
     }
 
-    // ==========================================
-    // 5. RESULT LOGIC
-    // ==========================================
     function showManualResult() {
         const taskName = document.getElementById('resultTaskSelect').value;
         const resultArea = document.getElementById('resultArea');
@@ -305,16 +300,13 @@
         const statusDiv = document.getElementById('resultStatus');
         const summaryDiv = document.getElementById('summaryContent'); 
 
-        // Clear Purana Data
         tbody.innerHTML = '';
         summaryDiv.innerHTML = ''; 
         statusDiv.innerText = '';
         resultArea.style.display = 'none';
 
-        // Check agar data majood hai
         if (allResults[taskName] && allResults[taskName].length > 0) {
             
-            // 1. Table Data Fill karein
             allResults[taskName].forEach(student => {
                 let row = `<tr>
                     <td>${student.name}</td>
@@ -323,7 +315,6 @@
                 tbody.innerHTML += row;
             });
             
-            // 2. Summary Check karein aur Show karein
             if (taskSummaries[taskName]) {
                 summaryDiv.innerHTML = taskSummaries[taskName];
                 summaryDiv.style.display = 'block';
@@ -341,8 +332,3 @@
 
 </body>
 </html>
-
-
-
-
-
