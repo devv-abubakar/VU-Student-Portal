@@ -1,343 +1,685 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VU Student Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* --- MATERIAL DESIGN CSS --- */
-        :root { --primary-color: #6200ea; --bg-color: #f0f2f5; --card-bg: #ffffff; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); margin: 0; display: flex; justify-content: center; padding: 40px 20px; min-height: 100vh; }
-        
-        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 30px; }
 
-        /* Card Styling */
-        .card { background: var(--card-bg); padding: 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); text-align: center; }
-        
-        h2 { color: var(--primary-color); font-weight: 700; margin-top: 0; font-size: 22px; }
-        label { display: block; text-align: left; font-weight: 600; font-size: 13px; color: #555; margin-bottom: 8px; margin-left: 5px; }
-        
-        select, input[type="file"] { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; background: #fafafa; outline: none; font-family: 'Poppins'; box-sizing: border-box; }
-        select:focus { border-color: var(--primary-color); background: #fff; }
-        
-        /* Buttons */
-        button { width: 100%; padding: 14px; background-color: var(--primary-color); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; transition: 0.3s; margin-top: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
-        button:hover { background-color: #3700b3; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(98, 0, 234, 0.2); }
-        button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+    <meta charset="UTF-8">
 
-        /* Result Table Styling */
-        #resultArea { margin-top: 20px; display: none; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-        th { background: #f8f9fa; color: #444; padding: 10px; border-bottom: 2px solid #eee; text-align: left; font-weight: 600; }
-        td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; color: #333; }
-        tr:last-child td { border-bottom: none; }
-        tr:hover td { background-color: #f9f9f9; }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .badge { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 12px; }
+    <title>VU Student Portal</title>
 
-        .status { margin-top: 15px; font-size: 13px; font-weight: 500; }
-        .success { color: green; }
-        .error { color: red; }
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        /* --- NEW SUMMARY SECTION STYLING --- */
-        .summary-box {
-            text-align: left;
-            background: #fff8e1;
-            border-left: 5px solid #ffca28;
-            padding: 15px;
-            margin-top: 25px;
-            border-radius: 8px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #444;
-        }
-        .summary-header { font-weight: 700; color: #bf360c; margin-bottom: 8px; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
-        .summary-item { margin-bottom: 8px; }
-        .tag-red { color: #d32f2f; font-weight: 600; }
-        .tag-orange { color: #ef6c00; font-weight: 600; }
-        .tag-green { color: #2e7d32; font-weight: 600; }
-    </style>
+    <style>
+
+        /* --- MATERIAL DESIGN CSS --- */
+
+        :root { --primary-color: #6200ea; --bg-color: #f0f2f5; --card-bg: #ffffff; }
+
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); margin: 0; display: flex; justify-content: center; padding: 40px 20px; min-height: 100vh; }
+
+        
+
+        .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 30px; }
+
+
+
+        /* Card Styling */
+
+        .card { background: var(--card-bg); padding: 30px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); text-align: center; }
+
+        
+
+        h2 { color: var(--primary-color); font-weight: 700; margin-top: 0; font-size: 22px; }
+
+        label { display: block; text-align: left; font-weight: 600; font-size: 13px; color: #555; margin-bottom: 8px; margin-left: 5px; }
+
+        
+
+        select, input[type="file"] { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px; background: #fafafa; outline: none; font-family: 'Poppins'; box-sizing: border-box; }
+
+        select:focus { border-color: var(--primary-color); background: #fff; }
+
+        
+
+        /* Buttons */
+
+        button { width: 100%; padding: 14px; background-color: var(--primary-color); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; transition: 0.3s; margin-top: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        button:hover { background-color: #3700b3; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(98, 0, 234, 0.2); }
+
+        button:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+
+
+
+        /* Result Table Styling */
+
+        #resultArea { margin-top: 20px; display: none; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+
+        th { background: #f8f9fa; color: #444; padding: 10px; border-bottom: 2px solid #eee; text-align: left; font-weight: 600; }
+
+        td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; color: #333; }
+
+        tr:last-child td { border-bottom: none; }
+
+        tr:hover td { background-color: #f9f9f9; }
+
+
+
+        .badge { background: #e8f5e9; color: #2e7d32; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 12px; }
+
+
+
+        .status { margin-top: 15px; font-size: 13px; font-weight: 500; }
+
+        .success { color: green; }
+
+        .error { color: red; }
+
+
+
+        /* --- NEW SUMMARY SECTION STYLING --- */
+
+        .summary-box {
+
+            text-align: left;
+
+            background: #fff8e1;
+
+            border-left: 5px solid #ffca28;
+
+            padding: 15px;
+
+            margin-top: 25px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            color: #444;
+
+        }
+
+        .summary-header { font-weight: 700; color: #bf360c; margin-bottom: 8px; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
+
+        .summary-item { margin-bottom: 8px; }
+
+        .tag-red { color: #d32f2f; font-weight: 600; }
+
+        .tag-orange { color: #ef6c00; font-weight: 600; }
+
+        .tag-green { color: #2e7d32; font-weight: 600; }
+
+    </style>
+
 </head>
+
 <body>
+
+
 
 <div class="container">
 
-    <div class="card">
-        <h2>Upload Assignment</h2>
-        <div style="margin-bottom: 20px; text-align: left;">
-            <label>Select Task</label>
-            <select id="uploadTaskSelect"></select>
-        </div>
-        <div style="margin-bottom: 20px; text-align: left;">
-            <label>Attach File</label>
-            <input type="file" id="fileInput">
-        </div>
-        <button id="uploadBtn" onclick="uploadFile()">Upload File</button>
-        <div id="uploadStatus" class="status"></div>
-    </div>
 
-    <div class="card">
-        <h2>Result of Tasks</h2>
-        <div style="text-align: left;">
-            <label>Select Task to View Marks</label>
-            <select id="resultTaskSelect" onchange="showManualResult()">
-                <option value="" disabled selected>-- Select Task --</option>
-            </select>
-        </div>
-        
-        <div id="resultArea">
-            <table id="resultTable">
-                <thead>
-                    <tr>
-                        <th>Student Name</th>
-                        <th style="text-align: right;">Marks / 10</th>
-                    </tr>
-                </thead>
-                <tbody id="resultBody">
-                    </tbody>
-            </table>
 
-            <div id="summaryContent"></div>
+    <div class="card">
 
-        </div>
-        <div id="resultStatus" class="status"></div>
-    </div>
+        <h2>Upload Assignment</h2>
+
+        <div style="margin-bottom: 20px; text-align: left;">
+
+            <label>Select Task</label>
+
+            <select id="uploadTaskSelect"></select>
+
+        </div>
+
+        <div style="margin-bottom: 20px; text-align: left;">
+
+            <label>Attach File</label>
+
+            <input type="file" id="fileInput">
+
+        </div>
+
+        <button id="uploadBtn" onclick="uploadFile()">Upload File</button>
+
+        <div id="uploadStatus" class="status"></div>
+
+    </div>
+
+
+
+    <div class="card">
+
+        <h2>Result of Tasks</h2>
+
+        <div style="text-align: left;">
+
+            <label>Select Task to View Marks</label>
+
+            <select id="resultTaskSelect" onchange="showManualResult()">
+
+                <option value="" disabled selected>-- Select Task --</option>
+
+            </select>
+
+        </div>
+
+        
+
+        <div id="resultArea">
+
+            <table id="resultTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student Name</th>
+
+                        <th style="text-align: right;">Marks / 10</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="resultBody">
+
+                    </tbody>
+
+            </table>
+
+
+
+            <div id="summaryContent"></div>
+
+
+
+        </div>
+
+        <div id="resultStatus" class="status"></div>
+
+    </div>
+
+
 
 </div>
 
+
+
 <script>
-    // ==========================================
-    // 1. RESULT DATA (UPDATED)
-    // ==========================================
-    
-    const allResults = {
-        "Task 1": [
-            { name: "Atika Khalid", marks: "8/10" },
-            { name: "Ayma Amjad", marks: "9/10" },
-            { name: "Ayesha Khan", marks: "9/10" },
-            { name: "Burhan Khan", marks: "9/10" },
-            { name: "Danish Raza", marks: "9/10" },
-            { name: "Hadia Butt", marks: "8/10" },
-            { name: "Hamza", marks: "8/10" },
-            { name: "Hania Noor", marks: "8/10" },
-            { name: "Iqra Jameel", marks: "10/10" },
-            { name: "Liza Ikram", marks: "10/10" },
-            { name: "Moeen", marks: "7/10" },
-            { name: "Muhammad Asad", marks: "9/10" },
-            { name: "Muhammad Tayyab", marks: "10/10" },
-            { name: "Rabia Zahid", marks: "10/10" },
-            { name: "Rabia Zahoor", marks: "10/10" },
-            { name: "Ruhma", marks: "10/10" },
-            { name: "saba", marks: "9/10" },
-            { name: "Shah Faisal", marks: "6/10" },
-            { name: "Syeda AneeqaZia", marks: "10/10" }
-        ],
-        "Task 2": [
-            { name: "Atika Khalid", marks: "9/10" },
-            { name: "AYMA AMJAD", marks: "10/10" },
-            { name: "Burhan Khan", marks: "9/10" },
-            { name: "Danish Raza", marks: "9/10" },
-            { name: "Hadia Butt", marks: "8.5/10" },
-            { name: "Hamza", marks: "8/10" },
-            { name: "Hania Noor", marks: "8.5/10" },
-            { name: "Iqra Jameel", marks: "9/10" },
-            { name: "Liza Ikram", marks: "10/10" },
-            { name: "Moeen ud Din", marks: "8.5/10" },
-            { name: "Muhammad Asad", marks: "10/10" },
-            { name: "Muhammad Tayyab", marks: "9/10" },
-            { name: "Rabia", marks: "10/10" },
-            { name: "Rabia Zahoor", marks: "8.5/10" },
-            { name: "Ruhma", marks: "8.5/10" },
-            { name: "saba", marks: "9/10" },
-            { name: "Shah Faisal", marks: "8/10" },
-            { name: "Syeda AneeqaZia", marks: "10/10" }
-        ],
-        "Task 3": []
-    };
 
-    // ==========================================
-    // 2. SUMMARY DATA (MISTAKES SUMMARY)
-    // ==========================================
-    
-    const taskSummaries = {
-        "Task 1": `
-            <div class="summary-box">
-                <div class="summary-header">📊 Feedback & Mistakes Summary (Task 1)</div>
-                
-                <div class="summary-item">
-                    <span class="tag-green">✅ Perfect (10/10):</span> Iqra, Tayyab, Liza, Rabia, Ruhma and Aneeqa ne bilkul clean HTML5 code likha.
-                </div>
-                <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
-                
-                <div class="summary-item">
-                    <span class="tag-orange">⚠️ Common Minor Mistakes (9-9.5):</span>
-                    <ul style="margin:5px 0; padding-left:20px;">
-                        <li><strong>Missing Doctype:</strong> (Ayesha, Burhan, Saba) File ke start mein <code>&lt;!DOCTYPE html&gt;</code> nahi tha.</li>
-                        <li><strong>Deprecated Tags:</strong> (Ayma, Asad) <code>&lt;center&gt;</code> tag use kiya jo ab use nahi hota.</li>
-                        <li><strong>Styling:</strong> (Danish) Tags mixed case mein likhay (e.g. <code>&lt;H4&gt;</code>).</li>
-                    </ul>
-                </div>
+    // ==========================================
 
-                <div class="summary-item">
-                    <span class="tag-red">❌ Major & Critical Errors (6-8):</span>
-                    <ul style="margin:5px 0; padding-left:20px;">
-                        <li><strong>Structure:</strong> (Hadia, Atika, Hamza) Old HTML Syntax use kiya (Old meta tags, center tags).</li>
-                        <li><strong>Wrong Nesting:</strong> (Moeen, Shah Faisal) <br>
-                        <em>Galti:</em> Heading tag ko Paragraph ya Underline tag ke andar band kiya. <br>
-                        <em>Sahi:</em> <code>&lt;h1&gt;</code> hamesha block element hai, kisi inline tag ke andar nahi aata.</li>
-                    </ul>
-                </div>
-            </div>
-        `,
-        "Task 2": `
-            <div class="summary-box">
-                <div class="summary-header">📊 Feedback & Mistakes Summary (Task 2)</div>
-                
-                <div class="summary-item">
-                    <span class="tag-green">✅ Top Performers (10/10):</span> 
-                    <strong>Liza Ikram, Muhammad Asad, Syeda Aneeqa, Ayma Amjad & Rabia</strong>. <br>
-                    In sab students ne behtareen kaam kiya aur full marks secure kiye.
-                </div>
-                
-                <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
+    // 1. RESULT DATA (UPDATED)
 
-                <div class="summary-item">
-                    <span class="tag-orange">⚠️ Nesting & Code Structure Errors:</span>
-                    <ul style="margin:5px 0; padding-left:20px;">
-                        <li><strong>Shah Faisal:</strong> List (<code>ul/ol</code>) ko Heading (<code>h3</code>) ke andar likha. Yeh invalid hai.</li>
-                        <li><strong>Ruhma (Rumi):</strong> Heading (<code>h2</code>) ko Underline (<code>u</code>) ke andar likha. Block element inline mein nahi ata.</li>
-                        <li><strong>saba:</strong> <code>&lt;u&gt;&lt;b&gt;...&lt;/u&gt;&lt;/b&gt;</code> (Tags galat order mein band kiye - Cross Nesting).</li>
-                        <li><strong>Burhan Khan:</strong> File mein <code>&lt;!DOCTYPE html&gt;</code> missing tha. Headings (h1-h6) already bold hoti hain, unke andar <code>&lt;b&gt;</code> lagana zaroori nahi.</li>
-                    </ul>
-                </div>
+    // ==========================================
 
-                <div class="summary-item">
-                    <span class="tag-orange">🔍 Typos, Spelling & Redundant Code:</span>
-                    <ul style="margin:5px 0; padding-left:20px;">
-                        <li><strong>Iqra Jameel:</strong> Start mein typo tha <code>=&lt;!DOCTYPE</code> (Extra <code>=</code> sign).</li>
-                        <li><strong>Danish Raza:</strong> Syntax typo (<code>Grocery&gt;</code>) aur Spelling mistakes (Yougurt).</li>
-                        <li><strong>Atika Khalid:</strong> Spelling mistakes (Importence, tages). Spell check zaroor karein.</li>
-                        <li><strong>Muhammad Tayyab:</strong> Headings ke andar unnecessary <code>&lt;b&gt;</code> tag use kiya.</li>
-                    </ul>
-                </div>
+    
 
-                <div class="summary-item">
-                    <span class="tag-red">❌ Deprecated Tags & Critical Issues:</span>
-                    <ul style="margin:5px 0; padding-left:20px;">
-                        <li><strong>Hamza & Hania Noor:</strong> <code>&lt;center&gt;</code> tag ya <code>align="center"</code> use kiya. HTML5 mein yeh allow nahi, CSS use karein.</li>
-                        <li><strong>Rabia Zahoor:</strong> <code>align="center"</code> use kiya aur Link broken tha (missing <code>https://</code>).</li>
-                        <li><strong>Hadia Butt:</strong> Doctype missing tha aur Live Server ki extra script code mein reh gayi thi.</li>
-                        <li><strong>Moeen ud Din:</strong> File ke start mein Doctype missing tha.</li>
-                    </ul>
-                </div>
-            </div>
-        `
-    };
+    const allResults = {
 
-    // ==========================================
-    // 3. CONFIGURATION & DROPDOWNS
-    // ==========================================
-    
-    const uploadSelect = document.getElementById('uploadTaskSelect');
-    const resultSelect = document.getElementById('resultTaskSelect');
+        "Task 1": [
 
-    for (let i = 1; i <= 30; i++) {
-        let t = `Task ${i}`;
-        uploadSelect.add(new Option(t, t));
-        resultSelect.add(new Option(t, t));
-    }
+            { name: "Atika Khalid", marks: "8/10" },
 
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM4OyL8Vo0SrO1fh4aGud1Dpt55wpKLa1G34_CePJDj7W3stEeDCj-dA_AyCULpPcO/exec";
+            { name: "Ayma Amjad", marks: "9/10" },
+
+            { name: "Ayesha Khan", marks: "9/10" },
+
+            { name: "Burhan Khan", marks: "9/10" },
+
+            { name: "Danish Raza", marks: "9/10" },
+
+            { name: "Hadia Butt", marks: "8/10" },
+
+            { name: "Hamza", marks: "8/10" },
+
+            { name: "Hania Noor", marks: "8/10" },
+
+            { name: "Iqra Jameel", marks: "10/10" },
+
+            { name: "Liza Ikram", marks: "10/10" },
+
+            { name: "Moeen", marks: "7/10" },
+
+            { name: "Muhammad Asad", marks: "9/10" },
+
+            { name: "Muhammad Tayyab", marks: "10/10" },
+
+            { name: "Rabia Zahid", marks: "10/10" },
+
+            { name: "Rabia Zahoor", marks: "10/10" },
+
+            { name: "Ruhma", marks: "10/10" },
+
+            { name: "saba", marks: "9/10" },
+
+            { name: "Shah Faisal", marks: "6/10" },
+
+            { name: "Syeda AneeqaZia", marks: "10/10" }
+
+        ],
+
+        "Task 2": [
+
+            { name: "Atika Khalid", marks: "9/10" },
+
+            { name: "AYMA AMJAD", marks: "10/10" },
+
+            { name: "Burhan Khan", marks: "9/10" },
+
+            { name: "Danish Raza", marks: "9/10" },
+
+            { name: "Hadia Butt", marks: "8.5/10" },
+
+            { name: "Hamza", marks: "8/10" },
+
+            { name: "Hania Noor", marks: "8.5/10" },
+
+            { name: "Iqra Jameel", marks: "9/10" },
+
+            { name: "Liza Ikram", marks: "10/10" },
+
+            { name: "Moeen ud Din", marks: "8.5/10" },
+
+            { name: "Muhammad Asad", marks: "10/10" },
+
+            { name: "Muhammad Tayyab", marks: "9/10" },
+
+            { name: "Rabia", marks: "10/10" },
+
+            { name: "Rabia Zahoor", marks: "8.5/10" },
+
+            { name: "Ruhma", marks: "8.5/10" },
+
+            { name: "saba", marks: "9/10" },
+
+            { name: "Shah Faisal", marks: "8/10" },
+
+            { name: "Syeda AneeqaZia", marks: "10/10" }
+
+        ],
+
+        "Task 3": []
+
+    };
 
 
-    // ==========================================
-    // 4. UPLOAD LOGIC
-    // ==========================================
-    function uploadFile() {
-        const fileInput = document.getElementById('fileInput');
-        const taskName = document.getElementById('uploadTaskSelect').value;
-        const statusDiv = document.getElementById('uploadStatus');
-        const btn = document.getElementById('uploadBtn');
 
-        if (fileInput.files.length === 0) {
-            statusDiv.innerText = "Please select a file first."; statusDiv.className = "status error"; return;
-        }
+    // ==========================================
 
-        const file = fileInput.files[0];
-        if (file.size > 10 * 1024 * 1024) { 
-            statusDiv.innerText = "File is too large (Max 10MB)."; statusDiv.className = "status error"; return;
-        }
+    // 2. SUMMARY DATA (MISTAKES SUMMARY)
 
-        const reader = new FileReader();
-        btn.innerText = "Uploading..."; btn.disabled = true; statusDiv.innerText = "";
+    // ==========================================
 
-        reader.onload = function(e) {
-            const payload = {
-                action: "upload",
-                filename: file.name,
-                mimeType: file.type,
-                file: e.target.result,
-                task: taskName
-            };
+    
 
-            fetch(SCRIPT_URL, {
-                method: "POST", mode: "no-cors",
-                headers: { "Content-Type": "text/plain" },
-                body: JSON.stringify(payload)
-            }).then(() => {
-                statusDiv.innerText = "File Uploaded Successfully!"; statusDiv.className = "status success";
-                btn.innerText = "Upload File"; btn.disabled = false; fileInput.value = "";
-            }).catch(err => {
-                statusDiv.innerText = "Error uploading file."; statusDiv.className = "status error"; btn.disabled = false;
-            });
-        };
-        reader.readAsDataURL(file);
-    }
+    const taskSummaries = {
 
-    // ==========================================
-    // 5. RESULT LOGIC
-    // ==========================================
-    function showManualResult() {
-        const taskName = document.getElementById('resultTaskSelect').value;
-        const resultArea = document.getElementById('resultArea');
-        const tbody = document.getElementById('resultBody');
-        const statusDiv = document.getElementById('resultStatus');
-        const summaryDiv = document.getElementById('summaryContent'); 
+        "Task 1": `
 
-        // Clear Purana Data
-        tbody.innerHTML = '';
-        summaryDiv.innerHTML = ''; 
-        statusDiv.innerText = '';
-        resultArea.style.display = 'none';
+            <div class="summary-box">
 
-        // Check agar data majood hai
-        if (allResults[taskName] && allResults[taskName].length > 0) {
-            
-            // 1. Table Data Fill karein
-            allResults[taskName].forEach(student => {
-                let row = `<tr>
-                    <td>${student.name}</td>
-                    <td style="text-align: right;"><span class="badge">${student.marks}</span></td>
-                </tr>`;
-                tbody.innerHTML += row;
-            });
-            
-            // 2. Summary Check karein aur Show karein
-            if (taskSummaries[taskName]) {
-                summaryDiv.innerHTML = taskSummaries[taskName];
-                summaryDiv.style.display = 'block';
-            } else {
-                summaryDiv.style.display = 'none';
-            }
+                <div class="summary-header">📊 Feedback & Mistakes Summary (Task 1)</div>
 
-            resultArea.style.display = 'block';
-        } else {
-            statusDiv.innerText = "Result not announced yet for " + taskName;
-            statusDiv.className = "status error";
-        }
-    }
+                
+
+                <div class="summary-item">
+
+                    <span class="tag-green">✅ Perfect (10/10):</span> Iqra, Tayyab, Liza, Rabia, Ruhma and Aneeqa ne bilkul clean HTML5 code likha.
+
+                </div>
+
+                <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
+
+                
+
+                <div class="summary-item">
+
+                    <span class="tag-orange">⚠️ Common Minor Mistakes (9-9.5):</span>
+
+                    <ul style="margin:5px 0; padding-left:20px;">
+
+                        <li><strong>Missing Doctype:</strong> (Ayesha, Burhan, Saba) File ke start mein <code>&lt;!DOCTYPE html&gt;</code> nahi tha.</li>
+
+                        <li><strong>Deprecated Tags:</strong> (Ayma, Asad) <code>&lt;center&gt;</code> tag use kiya jo ab use nahi hota.</li>
+
+                        <li><strong>Styling:</strong> (Danish) Tags mixed case mein likhay (e.g. <code>&lt;H4&gt;</code>).</li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div class="summary-item">
+
+                    <span class="tag-red">❌ Major & Critical Errors (6-8):</span>
+
+                    <ul style="margin:5px 0; padding-left:20px;">
+
+                        <li><strong>Structure:</strong> (Hadia, Atika, Hamza) Old HTML Syntax use kiya (Old meta tags, center tags).</li>
+
+                        <li><strong>Wrong Nesting:</strong> (Moeen, Shah Faisal) <br>
+
+                        <em>Galti:</em> Heading tag ko Paragraph ya Underline tag ke andar band kiya. <br>
+
+                        <em>Sahi:</em> <code>&lt;h1&gt;</code> hamesha block element hai, kisi inline tag ke andar nahi aata.</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        `,
+
+        "Task 2": `
+
+            <div class="summary-box">
+
+                <div class="summary-header">📊 Feedback & Mistakes Summary (Task 2)</div>
+
+                
+
+                <div class="summary-item">
+
+                    <span class="tag-green">✅ Top Performers (10/10):</span> 
+
+                    <strong>Liza Ikram, Muhammad Asad, Syeda Aneeqa, Ayma Amjad & Rabia</strong>. <br>
+
+                    In sab students ne behtareen kaam kiya aur full marks secure kiye.
+
+                </div>
+
+                
+
+                <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
+
+
+
+                <div class="summary-item">
+
+                    <span class="tag-orange">⚠️ Nesting & Code Structure Errors:</span>
+
+                    <ul style="margin:5px 0; padding-left:20px;">
+
+                        <li><strong>Shah Faisal:</strong> List (<code>ul/ol</code>) ko Heading (<code>h3</code>) ke andar likha. Yeh invalid hai.</li>
+
+                        <li><strong>Ruhma (Rumi):</strong> Heading (<code>h2</code>) ko Underline (<code>u</code>) ke andar likha. Block element inline mein nahi ata.</li>
+
+                        <li><strong>saba:</strong> <code>&lt;u&gt;&lt;b&gt;...&lt;/u&gt;&lt;/b&gt;</code> (Tags galat order mein band kiye - Cross Nesting).</li>
+
+                        <li><strong>Burhan Khan:</strong> File mein <code>&lt;!DOCTYPE html&gt;</code> missing tha. Headings (h1-h6) already bold hoti hain, unke andar <code>&lt;b&gt;</code> lagana zaroori nahi.</li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div class="summary-item">
+
+                    <span class="tag-orange">🔍 Typos, Spelling & Redundant Code:</span>
+
+                    <ul style="margin:5px 0; padding-left:20px;">
+
+                        <li><strong>Iqra Jameel:</strong> Start mein typo tha <code>=&lt;!DOCTYPE</code> (Extra <code>=</code> sign).</li>
+
+                        <li><strong>Danish Raza:</strong> Syntax typo (<code>Grocery&gt;</code>) aur Spelling mistakes (Yougurt).</li>
+
+                        <li><strong>Atika Khalid:</strong> Spelling mistakes (Importence, tages). Spell check zaroor karein.</li>
+
+                        <li><strong>Muhammad Tayyab:</strong> Headings ke andar unnecessary <code>&lt;b&gt;</code> tag use kiya.</li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <div class="summary-item">
+
+                    <span class="tag-red">❌ Deprecated Tags & Critical Issues:</span>
+
+                    <ul style="margin:5px 0; padding-left:20px;">
+
+                        <li><strong>Hamza & Hania Noor:</strong> <code>&lt;center&gt;</code> tag ya <code>align="center"</code> use kiya. HTML5 mein yeh allow nahi, CSS use karein.</li>
+
+                        <li><strong>Rabia Zahoor:</strong> <code>align="center"</code> use kiya aur Link broken tha (missing <code>https://</code>).</li>
+
+                        <li><strong>Hadia Butt:</strong> Doctype missing tha aur Live Server ki extra script code mein reh gayi thi.</li>
+
+                        <li><strong>Moeen ud Din:</strong> File ke start mein Doctype missing tha.</li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        `
+
+    };
+
+
+
+    // ==========================================
+
+    // 3. CONFIGURATION & DROPDOWNS
+
+    // ==========================================
+
+    
+
+    const uploadSelect = document.getElementById('uploadTaskSelect');
+
+    const resultSelect = document.getElementById('resultTaskSelect');
+
+
+
+    for (let i = 1; i <= 30; i++) {
+
+        let t = `Task ${i}`;
+
+        uploadSelect.add(new Option(t, t));
+
+        resultSelect.add(new Option(t, t));
+
+    }
+
+
+
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM4OyL8Vo0SrO1fh4aGud1Dpt55wpKLa1G34_CePJDj7W3stEeDCj-dA_AyCULpPcO/exec";
+
+
+
+
+
+    // ==========================================
+
+    // 4. UPLOAD LOGIC
+
+    // ==========================================
+
+    function uploadFile() {
+
+        const fileInput = document.getElementById('fileInput');
+
+        const taskName = document.getElementById('uploadTaskSelect').value;
+
+        const statusDiv = document.getElementById('uploadStatus');
+
+        const btn = document.getElementById('uploadBtn');
+
+
+
+        if (fileInput.files.length === 0) {
+
+            statusDiv.innerText = "Please select a file first."; statusDiv.className = "status error"; return;
+
+        }
+
+
+
+        const file = fileInput.files[0];
+
+        if (file.size > 10 * 1024 * 1024) { 
+
+            statusDiv.innerText = "File is too large (Max 10MB)."; statusDiv.className = "status error"; return;
+
+        }
+
+
+
+        const reader = new FileReader();
+
+        btn.innerText = "Uploading..."; btn.disabled = true; statusDiv.innerText = "";
+
+
+
+        reader.onload = function(e) {
+
+            const payload = {
+
+                action: "upload",
+
+                filename: file.name,
+
+                mimeType: file.type,
+
+                file: e.target.result,
+
+                task: taskName
+
+            };
+
+
+
+            fetch(SCRIPT_URL, {
+
+                method: "POST", mode: "no-cors",
+
+                headers: { "Content-Type": "text/plain" },
+
+                body: JSON.stringify(payload)
+
+            }).then(() => {
+
+                statusDiv.innerText = "File Uploaded Successfully!"; statusDiv.className = "status success";
+
+                btn.innerText = "Upload File"; btn.disabled = false; fileInput.value = "";
+
+            }).catch(err => {
+
+                statusDiv.innerText = "Error uploading file."; statusDiv.className = "status error"; btn.disabled = false;
+
+            });
+
+        };
+
+        reader.readAsDataURL(file);
+
+    }
+
+
+
+    // ==========================================
+
+    // 5. RESULT LOGIC
+
+    // ==========================================
+
+    function showManualResult() {
+
+        const taskName = document.getElementById('resultTaskSelect').value;
+
+        const resultArea = document.getElementById('resultArea');
+
+        const tbody = document.getElementById('resultBody');
+
+        const statusDiv = document.getElementById('resultStatus');
+
+        const summaryDiv = document.getElementById('summaryContent'); 
+
+
+
+        // Clear Purana Data
+
+        tbody.innerHTML = '';
+
+        summaryDiv.innerHTML = ''; 
+
+        statusDiv.innerText = '';
+
+        resultArea.style.display = 'none';
+
+
+
+        // Check agar data majood hai
+
+        if (allResults[taskName] && allResults[taskName].length > 0) {
+
+            
+
+            // 1. Table Data Fill karein
+
+            allResults[taskName].forEach(student => {
+
+                let row = `<tr>
+
+                    <td>${student.name}</td>
+
+                    <td style="text-align: right;"><span class="badge">${student.marks}</span></td>
+
+                </tr>`;
+
+                tbody.innerHTML += row;
+
+            });
+
+            
+
+            // 2. Summary Check karein aur Show karein
+
+            if (taskSummaries[taskName]) {
+
+                summaryDiv.innerHTML = taskSummaries[taskName];
+
+                summaryDiv.style.display = 'block';
+
+            } else {
+
+                summaryDiv.style.display = 'none';
+
+            }
+
+
+
+            resultArea.style.display = 'block';
+
+        } else {
+
+            statusDiv.innerText = "Result not announced yet for " + taskName;
+
+            statusDiv.className = "status error";
+
+        }
+
+    }
+
 </script>
 
+
+
 </body>
+
 </html>
