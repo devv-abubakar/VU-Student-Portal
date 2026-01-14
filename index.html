@@ -188,8 +188,10 @@
         }
 
         const file = fileInput.files[0];
-        if (file.size > 10 * 1024 * 1024) { 
-            statusDiv.innerText = "File is too large (Max 10MB)."; statusDiv.className = "status error"; return;
+        
+        // --- UPDATED LIMIT TO 100MB ---
+        if (file.size > 100 * 1024 * 1024) { 
+            statusDiv.innerText = "File is too large (Max 100MB)."; statusDiv.className = "status error"; return;
         }
 
         const reader = new FileReader();
@@ -216,7 +218,7 @@
                     progressBar.style.width = progress + "%";
                     progressText.innerText = progress + "% (Uploading...)";
                 }
-            }, 300);
+            }, 500); // Slowed down progress for larger files
 
             fetch(SCRIPT_URL, {
                 method: "POST",
