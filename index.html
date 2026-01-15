@@ -222,255 +222,180 @@
 
     // ==========================================
 
-    
-
     const allResults = {
-
         "Task 1": [
-
             { name: "Atika Khalid", marks: "8/10" },
-
             { name: "Ayma Amjad", marks: "9/10" },
-
             { name: "Ayesha Khan", marks: "9/10" },
-
             { name: "Burhan Khan", marks: "9/10" },
-
             { name: "Danish Raza", marks: "9/10" },
-
             { name: "Hadia Butt", marks: "8/10" },
-
             { name: "Hamza", marks: "8/10" },
-
             { name: "Hania Noor", marks: "8/10" },
-
             { name: "Iqra Jameel", marks: "10/10" },
-
             { name: "Liza Ikram", marks: "10/10" },
-
             { name: "Moeen", marks: "7/10" },
-
             { name: "Muhammad Asad", marks: "9/10" },
-
             { name: "Muhammad Tayyab", marks: "10/10" },
-
             { name: "Rabia Zahid", marks: "10/10" },
-
             { name: "Rabia Zahoor", marks: "10/10" },
-
             { name: "Ruhma", marks: "10/10" },
-
             { name: "saba", marks: "9/10" },
-
             { name: "Shah Faisal", marks: "6/10" },
-
             { name: "Syeda AneeqaZia", marks: "10/10" }
-
         ],
-
         "Task 2": [
-
             { name: "Atika Khalid", marks: "9/10" },
-
-            { name: "AYMA AMJAD", marks: "10/10" },
-
+            { name: "Ayma Amjad", marks: "10/10" },
             { name: "Burhan Khan", marks: "9/10" },
-
             { name: "Danish Raza", marks: "9/10" },
-
             { name: "Hadia Butt", marks: "8.5/10" },
-
             { name: "Hamza", marks: "8/10" },
-
             { name: "Hania Noor", marks: "8.5/10" },
-
             { name: "Iqra Jameel", marks: "9/10" },
-
             { name: "Liza Ikram", marks: "10/10" },
-
             { name: "Moeen ud Din", marks: "8.5/10" },
-
             { name: "Muhammad Asad", marks: "10/10" },
-
             { name: "Muhammad Tayyab", marks: "9/10" },
-
             { name: "Rabia", marks: "10/10" },
-
             { name: "Rabia Zahoor", marks: "8.5/10" },
-
             { name: "Ruhma", marks: "8.5/10" },
-
             { name: "saba", marks: "9/10" },
-
             { name: "Shah Faisal", marks: "8/10" },
-
             { name: "Syeda AneeqaZia", marks: "10/10" }
-
         ],
-
-        "Task 3": []
-
+        "Task 3": [
+             { name: "Atika Khalid", marks: "10/10" },
+             { name: "Ayma Amjad", marks: "9/10" },
+             { name: "Burhan Khan", marks: "9/10" },
+             { name: "Danish Raza", marks: "8/10" },
+             { name: "Hadia Butt", marks: "7/10" },
+             { name: "Hamza", marks: "10/10" },
+             { name: "Hania Noor", marks: "8/10" },
+             { name: "Iqra Jameel", marks: "8/10" },
+             { name: "Liza Ikram", marks: "9/10" },
+             { name: "Moeen", marks: "8/10" },
+             { name: "Muhammad Asad", marks: "8/10" },
+             { name: "Muhammad Tayyab", marks: "8/10" },
+             { name: "Rabia Zahid", marks: "7/10" },
+             { name: "Ruhma", marks: "6/10" },
+             { name: "Syeda AneeqaZia", marks: "10/10" }
+        ]
     };
 
-
-
     // ==========================================
-
     // 2. SUMMARY DATA (MISTAKES SUMMARY)
-
     // ==========================================
-
     
-
     const taskSummaries = {
-
         "Task 1": `
-
             <div class="summary-box">
-
                 <div class="summary-header">📊 Feedback & Mistakes Summary (Task 1)</div>
-
                 
-
                 <div class="summary-item">
-
                     <span class="tag-green">✅ Perfect (10/10):</span> Iqra, Tayyab, Liza, Rabia, Ruhma and Aneeqa ne bilkul clean HTML5 code likha.
-
                 </div>
-
                 <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
-
                 
-
                 <div class="summary-item">
-
                     <span class="tag-orange">⚠️ Common Minor Mistakes (9-9.5):</span>
-
                     <ul style="margin:5px 0; padding-left:20px;">
-
                         <li><strong>Missing Doctype:</strong> (Ayesha, Burhan, Saba) File ke start mein <code>&lt;!DOCTYPE html&gt;</code> nahi tha.</li>
-
                         <li><strong>Deprecated Tags:</strong> (Ayma, Asad) <code>&lt;center&gt;</code> tag use kiya jo ab use nahi hota.</li>
-
                         <li><strong>Styling:</strong> (Danish) Tags mixed case mein likhay (e.g. <code>&lt;H4&gt;</code>).</li>
-
                     </ul>
-
                 </div>
 
-
-
                 <div class="summary-item">
-
                     <span class="tag-red">❌ Major & Critical Errors (6-8):</span>
-
                     <ul style="margin:5px 0; padding-left:20px;">
-
                         <li><strong>Structure:</strong> (Hadia, Atika, Hamza) Old HTML Syntax use kiya (Old meta tags, center tags).</li>
-
                         <li><strong>Wrong Nesting:</strong> (Moeen, Shah Faisal) <br>
-
                         <em>Galti:</em> Heading tag ko Paragraph ya Underline tag ke andar band kiya. <br>
-
                         <em>Sahi:</em> <code>&lt;h1&gt;</code> hamesha block element hai, kisi inline tag ke andar nahi aata.</li>
-
                     </ul>
-
                 </div>
-
             </div>
-
         `,
-
         "Task 2": `
-
             <div class="summary-box">
-
                 <div class="summary-header">📊 Feedback & Mistakes Summary (Task 2)</div>
-
                 
-
                 <div class="summary-item">
-
                     <span class="tag-green">✅ Top Performers (10/10):</span> 
-
                     <strong>Liza Ikram, Muhammad Asad, Syeda Aneeqa, Ayma Amjad & Rabia</strong>. <br>
-
                     In sab students ne behtareen kaam kiya aur full marks secure kiye.
-
                 </div>
-
                 
-
                 <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
 
-
-
                 <div class="summary-item">
-
                     <span class="tag-orange">⚠️ Nesting & Code Structure Errors:</span>
-
                     <ul style="margin:5px 0; padding-left:20px;">
-
                         <li><strong>Shah Faisal:</strong> List (<code>ul/ol</code>) ko Heading (<code>h3</code>) ke andar likha. Yeh invalid hai.</li>
-
                         <li><strong>Ruhma (Rumi):</strong> Heading (<code>h2</code>) ko Underline (<code>u</code>) ke andar likha. Block element inline mein nahi ata.</li>
-
                         <li><strong>saba:</strong> <code>&lt;u&gt;&lt;b&gt;...&lt;/u&gt;&lt;/b&gt;</code> (Tags galat order mein band kiye - Cross Nesting).</li>
-
                         <li><strong>Burhan Khan:</strong> File mein <code>&lt;!DOCTYPE html&gt;</code> missing tha. Headings (h1-h6) already bold hoti hain, unke andar <code>&lt;b&gt;</code> lagana zaroori nahi.</li>
-
                     </ul>
-
                 </div>
 
-
-
                 <div class="summary-item">
-
                     <span class="tag-orange">🔍 Typos, Spelling & Redundant Code:</span>
-
                     <ul style="margin:5px 0; padding-left:20px;">
-
                         <li><strong>Iqra Jameel:</strong> Start mein typo tha <code>=&lt;!DOCTYPE</code> (Extra <code>=</code> sign).</li>
-
                         <li><strong>Danish Raza:</strong> Syntax typo (<code>Grocery&gt;</code>) aur Spelling mistakes (Yougurt).</li>
-
                         <li><strong>Atika Khalid:</strong> Spelling mistakes (Importence, tages). Spell check zaroor karein.</li>
-
                         <li><strong>Muhammad Tayyab:</strong> Headings ke andar unnecessary <code>&lt;b&gt;</code> tag use kiya.</li>
-
                     </ul>
-
                 </div>
-
-
 
                 <div class="summary-item">
-
                     <span class="tag-red">❌ Deprecated Tags & Critical Issues:</span>
-
                     <ul style="margin:5px 0; padding-left:20px;">
-
                         <li><strong>Hamza & Hania Noor:</strong> <code>&lt;center&gt;</code> tag ya <code>align="center"</code> use kiya. HTML5 mein yeh allow nahi, CSS use karein.</li>
-
                         <li><strong>Rabia Zahoor:</strong> <code>align="center"</code> use kiya aur Link broken tha (missing <code>https://</code>).</li>
-
                         <li><strong>Hadia Butt:</strong> Doctype missing tha aur Live Server ki extra script code mein reh gayi thi.</li>
-
                         <li><strong>Moeen ud Din:</strong> File ke start mein Doctype missing tha.</li>
-
                     </ul>
+                </div>
+            </div>
+        `,
+         "Task 3": `
+            <div class="summary-box">
+                <div class="summary-header">📊 Feedback & Mistakes Summary (Task 3)</div>
+                
+                <div class="summary-item">
+                    <span class="tag-green">🌟 Star Performers (10/10):</span> 
+                    <strong>Hamza, Syeda Aneeqa & Atika Khalid</strong>. <br>
+                    Inhon ne task ki requirements (Multi-page linking + Online/Offline Images) ko perfectly follow kiya. 
+                    <br><em>Special Mention:</em> <strong>Ayma Amjad</strong> (Only student to use Online Images correctly) & <strong>Liza Ikram</strong> (Great extra effort).
+                </div>
+                
+                <hr style="border:0; border-top:1px dashed #ccc; margin:10px 0;">
 
+                <div class="summary-item">
+                    <span class="tag-orange">⚠️ The Most Common Mistake: Online vs Offline Images</span>
+                    <p>Is task mein 80% students (Burhan, Tayyab, Hania, Danish, Iqra, Moeen) ne <strong>Online Image</strong> miss kar di.</p>
+                    
+                    <ul style="margin:5px 0; padding-left:20px;">
+                        <li><strong>Offline (Local):</strong> <code>src="picture.jpg"</code> (Ye aapke computer par hai).</li>
+                        <li><strong>Online (Absolute):</strong> <code>src="https://website.com/image.jpg"</code> (Ye internet link hai).</li>
+                        <li>Task mein dono use karni thin.</li>
+                    </ul>
                 </div>
 
+                <div class="summary-item">
+                    <span class="tag-red">❌ Critical Code Errors:</span>
+                    <ul style="margin:5px 0; padding-left:20px;">
+                        <li><strong>Incomplete Task (Single File):</strong> (Asad, Hadia, Rabia) 
+                        Task requirement thi ke kam az kam 2 pages hon jo aapas mein link hon. Aap ne sirf 1 file submit ki.</li>
+                        <li><strong>Ruhma (Rumi):</strong> Image tag mein <code>.html</code> file ka link lagaya (e.g. <code>src="page.html"</code>). Image tag sirf pictures (jpg, png) ke liye hota hai.</li>
+                        <li><strong>Ayma Amjad:</strong> Typos in file linking (e.g. <code>Contaact.html</code>). Is se link toot jata hai.</li>
+                    </ul>
+                </div>
             </div>
-
         `
-
     };
-
-
 
     // ==========================================
 
@@ -683,3 +608,4 @@
 </body>
 
 </html>
+
